@@ -9,8 +9,8 @@ export default function FindEventSection() {
   const searchElement = useRef();
   const [searchTerm, setSearchTerm] = useState();
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["events", { search: searchTerm }],
-    queryFn: ({ signal }) => fetchEvents({ signal, search: searchTerm }),
+    queryKey: ["events", { searchTerm: searchTerm }],
+    queryFn: ({ signal, queryKey }) => fetchEvents({ signal, ...queryKey[1] }),
     staleTime: 5000,
     // enabled: true, ini defaultnya
     enabled: searchTerm !== undefined, // ini preveent querynya jalan saat initiate

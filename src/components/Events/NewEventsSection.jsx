@@ -23,8 +23,9 @@ export default function NewEventsSection() {
     error,
   } = useQuery({
     // fetch events will be executed by useQuery
-    queryKey: ["events"], // unique key for the query, for caching
-    queryFn: fetchEvents, // function that return a promise
+    // queryKey: ["events"], // unique key for the query, for caching
+    queryKey: ["events", { max: 3 }], //ini punya alternatif bisa lgsg pass query key ke query function
+    queryFn: ({ signal, queryKey }) => fetchEvents({ signal, ...queryKey[1] }), // function that return a promise
     // react query by default pass data jadi search termnya kedeteksi sebuah object.
     // staleTime: 0, // selalu request behind the scene untuk updated data
     staleTime: 5000, // jadi saat pindah halaman, dan kembali lagi ke halaman ini, data akan di fetch ulang setelah 5 detik
